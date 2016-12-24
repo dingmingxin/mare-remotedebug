@@ -492,13 +492,13 @@ lclient_getinfo(lua_State *L) {
 	lua_settop(L, 2);
 	if (lua_type(L, 2) != LUA_TTABLE) {
 		lua_pop(L, 1);
-		lua_createtable(L, 0, 5);
+		lua_createtable(L, 0, 9);
 	}
 	lua_State *hL = get_host(L);
 	lua_Debug ar;
 	if (lua_getstack(hL, level, &ar) == 0)
 		return 0;
-	if (lua_getinfo(hL, "Sl", &ar) == 0)
+	if (lua_getinfo(hL, "Sln", &ar) == 0)
 		return 0;
 	lua_pushstring(L, ar.source);
 	lua_setfield(L, 2, "source");
@@ -510,6 +510,14 @@ lclient_getinfo(lua_State *L) {
 	lua_setfield(L, 2, "linedefined");
 	lua_pushinteger(L, ar.lastlinedefined);
 	lua_setfield(L, 2, "lastlinedefined");
+	lua_pushinteger(L, 1 >> ar.event);
+	lua_setfield(L, 2, "event");
+	lua_pushstring(L, ar.name);
+	lua_setfield(L, 2, "name");
+	lua_pushstring(L, ar.what);
+	lua_setfield(L, 2, "what");
+	lua_pushstring(L, ar.namewhat);
+	lua_setfield(L, 2, "namewhat");
 
 	return 1;
 }
