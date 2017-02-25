@@ -6,6 +6,10 @@
 #include <stdint.h>
 #include <string.h>
 
+#if defined(_GNU_SOURCE) && !defined(_WIN32)
+#include <dlfcn.h>
+#endif
+
 /*
 	TYPE            frame (16bit)      index (32bit)      size
 	-----------------------------------------------------------
@@ -296,25 +300,43 @@ get_props(lua_State *L, lua_State *cL) {
 
 	int t = lua_type(cL, -1);
     if (t == LUA_TFUNCTION) {
-        lua_Debug ar;
-        lua_getinfo(cL, ">Su", &ar);
-        lua_newtable(L);
-        lua_pushstring(L, ar.source);
-        lua_setfield(L, -2, "source");
-        lua_pushstring(L, ar.short_src);
-        lua_setfield(L, -2, "short_src");
-        lua_pushinteger(L, ar.linedefined);
-        lua_setfield(L, -2, "linedefined");
-        lua_pushinteger(L, ar.lastlinedefined);
-        lua_setfield(L, -2, "lastlinedefined");
-        lua_pushstring(L, ar.what);
-        lua_setfield(L, -2, "what");
-        lua_pushinteger(L, ar.nparams);
-        lua_setfield(L, -2, "nparams");
-        lua_pushinteger(L, ar.nups);
-        lua_setfield(L, -2, "nups");
-        lua_pushinteger(L, ar.isvararg);
-        lua_setfield(L, -2, "isvararg");
+
+        int iscfunc = lua_iscfunction(cL, -1);
+        if (iscfunc) {
+            void *cfunc = (void *)lua_tocfunction(cL, -1);
+
+            lua_createtable(L, 0, 3);
+            lua_pushfstring(L, "%p", cfunc);
+            lua_setfield(L, -2, "pointer_address");
+
+#if defined(_GNU_SOURCE) && !defined(_WIN32)
+            Dl_info dli;
+            int rc = dladdr(cfunc, &dli);
+            if (rc) {
+                if (dli.dli_fbase) {
+                    lua_pushfstring(L, "%p", dli.dli_fbase);
+                    lua_setfield(L, -2, "symbol_base");
+                }
+                if (dli.dli_fname) {
+                    lua_pushstring(L, dli.dli_fname);
+                    lua_setfield(L, -2, "symbol_file");
+                }
+            }
+#endif
+
+        } else {
+            lua_Debug ar;
+            lua_getinfo(cL, ">Su", &ar);
+
+            lua_createtable(L, 0, 3);
+            lua_pushstring(L, ar.source);
+            lua_setfield(L, -2, "source");
+            lua_pushinteger(L, ar.linedefined);
+            lua_setfield(L, -2, "linedefined");
+            lua_pushinteger(L, ar.lastlinedefined);
+            lua_setfield(L, -2, "lastlinedefined");
+        }
+
     } else {
         lua_pushinteger(L, lua_status(cL));
     }
