@@ -443,6 +443,13 @@ lclient_value(lua_State *L) {
 }
 
 static int
+lclient_props(lua_State *L) {
+	lua_State *hL = get_host(L);
+	get_props(L, hL);
+	return 1;
+}
+
+static int
 lclient_type(lua_State *L) {
 	lua_State *hL = get_host(L);
 	lua_pushstring(L, get_type(L, hL));
@@ -575,6 +582,7 @@ luaopen_remotedebug(lua_State *L) {
 			{ "index", lclient_index },
 			{ "next", lclient_next },
 			{ "value", lclient_value },
+			{ "props", lclient_props },
 			{ "type", lclient_type },
 			{ "getinfo", lclient_getinfo },
 			{ "activeline", lclient_activeline },

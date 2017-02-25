@@ -284,6 +284,42 @@ get_value(lua_State *L, lua_State *cL) {
 	lua_pop(cL,1);
 }
 
+static void
+get_props(lua_State *L, lua_State *cL) {
+	if (eval_value(L, cL) == LUA_TNONE) {
+		lua_pop(L, 1);
+		lua_pushnil(L);
+		// failed
+		return;
+	}
+	lua_pop(L, 1);
+
+	int t = lua_type(cL, -1);
+    if (t == LUA_TFUNCTION) {
+        lua_Debug ar;
+        lua_getinfo(cL, ">Su", &ar);
+        lua_newtable(L);
+        lua_pushstring(L, ar.source);
+        lua_setfield(L, -2, "source");
+        lua_pushstring(L, ar.short_src);
+        lua_setfield(L, -2, "short_src");
+        lua_pushinteger(L, ar.linedefined);
+        lua_setfield(L, -2, "linedefined");
+        lua_pushinteger(L, ar.lastlinedefined);
+        lua_setfield(L, -2, "lastlinedefined");
+        lua_pushstring(L, ar.what);
+        lua_setfield(L, -2, "what");
+        lua_pushinteger(L, ar.nparams);
+        lua_setfield(L, -2, "nparams");
+        lua_pushinteger(L, ar.nups);
+        lua_setfield(L, -2, "nups");
+        lua_pushinteger(L, ar.isvararg);
+        lua_setfield(L, -2, "isvararg");
+    } else {
+        lua_pushinteger(L, lua_status(cL));
+    }
+}
+
 static const char *
 get_type(lua_State *L, lua_State *cL) {
 	int t = eval_value(L, cL);
