@@ -1,3 +1,6 @@
 language: c
 script:
-    - gcc -v
+script:
+    - git clone --depth 1 https://github.com/muzuiget/mirror-lua.git lua
+    - gcc -O2 -shared -fPIC -D_GNU_SOURCE -I./lua -o remotedebug.so debugvar.h remotedebug.c
+    - ls
