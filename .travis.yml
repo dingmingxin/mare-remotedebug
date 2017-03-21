@@ -2,11 +2,11 @@ language: c
 os: osx
 osx_image: xcode8.2
 script:
-    - git clone --depth 1 https://github.com/muzuiget/mirror-lua.git lua
-    - cd lua
+    - git clone --depth 1 https://github.com/muzuiget/mirror-lua.git lua-src
+    - cd lua-src
     - make macosx
     - cd ..
     - gcc -O2 -bundle -undefined dynamic_lookup -I./lua/src -o remotedebug.so remotedebug.c
     - ls
     - cp lua/src/lua .
-    - lua -e 'print(require("remotedebug"))'
+    - ./lua -e 'print(require("remotedebug"))'
