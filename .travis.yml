@@ -11,4 +11,6 @@ martix:
           env: TARGET_ARCH=macos-x64
           
 script:
-    - build.sh
+    - pwd
+    - ls
+    - ./build.sh
