@@ -3,5 +3,5 @@ os: osx
 osx_image: xcode8.2
 script:
     - git clone --depth 1 https://github.com/muzuiget/mirror-lua.git lua
-    - gcc -O2 -shared -fPIC -D_GNU_SOURCE -I./lua/src -o remotedebug.so debugvar.h remotedebug.c
+    - gcc -O2 -bundle -undefined dynamic_lookup -I./lua/src -o remotedebug.so remotedebug.c
     - ls
