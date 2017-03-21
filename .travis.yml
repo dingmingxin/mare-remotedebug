@@ -8,7 +8,7 @@ matrix:
           env: MARE_ARCH=linux-x64
         - os: linux
           dist: trusty
-          sudo: false
+          sudo: required
           env: MARE_ARCH=linux-x86
         - os: linux
           dist: trusty
@@ -23,7 +23,7 @@ matrix:
           env: MARE_ARCH=mac-x64
 
 before_install:
-    - ./install.ubuntu.sh
+    - ./install.travis.sh
           
 script:
     - ./build.sh
