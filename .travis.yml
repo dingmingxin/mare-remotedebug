@@ -1,6 +1,6 @@
 language: c
 
-martix:
+matrix:
     include:
         - os: linux
           dist: trusty
@@ -13,4 +13,5 @@ martix:
 script:
     - pwd
     - ls
+    - env
     - ./build.sh
