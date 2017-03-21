@@ -1,6 +1,7 @@
 #!/bin/bash
 
 git clone --depth 1 https://github.com/muzuiget/mirror-lua.git lua-src
+echo $TARGET_ARCH
 cd lua-src
 if [[ $TARGET_ARCH == 'macosx-x64' ]]; then
     make macosx
@@ -9,7 +10,7 @@ if [[ $TARGET_ARCH == 'macosx-x64' ]]; then
 else
     make linux
     cd ..
-    gcc -g -shared -fPIC -D_GNU_SOURCE -o remotedebug.so remotedebug.c
+    gcc -O2 -shared -fPIC -D_GNU_SOURCE -I./lua-src/src -o remotedebug.so remotedebug.c
 fi
 
 ls
