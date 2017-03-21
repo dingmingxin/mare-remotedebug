@@ -1,9 +1,9 @@
 #!/bin/bash
 
 git clone --depth 1 https://github.com/muzuiget/mirror-lua.git lua-src
-echo $TARGET_ARCH
+echo $MARE_TARGET
 cd lua-src
-if [[ $TARGET_ARCH == 'macosx-x64' ]]; then
+if [[ $MARE_TARGET == 'macosx-x64' ]]; then
     make macosx
     cd ..
     gcc -O2 -bundle -undefined dynamic_lookup -I./lua-src/src -o remotedebug.so remotedebug.c

@@ -5,10 +5,10 @@ matrix:
         - os: linux
           dist: trusty
           sudo: false
-          env: TARGET_ARCH=linux-x64
+          env: MARE_TARGET=linux-x64
         - os: osx
           osx_image: xcode8.2
-          env: TARGET_ARCH=macos-x64
+          env: MARE_TARGET=macos-x64
           
 script:
     - pwd
