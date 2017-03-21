@@ -19,7 +19,4 @@ matrix:
           env: MARE_TARGET=macos-x64
           
 script:
-    - pwd
-    - ls
-    - env
     - ./build.sh
