@@ -8,11 +8,11 @@ matrix:
           env: MARE_TARGET=linux-x64
         - os: linux
           dist: trusty
-          sudo: false
+          sudo: required
           env: MARE_TARGET=win-x64
         - os: linux
           dist: trusty
-          sudo: false
+          sudo: required
           env: MARE_TARGET=win-x86
         - os: osx
           osx_image: xcode8.2

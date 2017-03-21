@@ -8,7 +8,8 @@ if [ $MARE_TARGET = 'macos-x64' ]; then
     cd ../..
     gcc -O2 -bundle -undefined dynamic_lookup -I./lua-src/src -o remotedebug.so remotedebug.c
 elif [ $MARE_TARGET = 'win-x64' ]; then
-    apt install gcc-mingw-w64-x86-64
+    sudo apt update
+    sudo apt install gcc-mingw-w64-x86-64
     sed -i 's/^\(CC\|AR\|RANLIB\)= /\0x86_64-w64-mingw32-/g' Makefile
     make mingw
     cd ../..
@@ -17,7 +18,8 @@ elif [ $MARE_TARGET = 'win-x64' ]; then
         -o remotedebug.dll remotedebug.c \
         -L./lua-src/src -llua53
 elif [ $MARE_TARGET = 'win-x86' ]; then
-    apt install gcc-mingw-w64-i686
+    sudo apt update
+    sudo apt install gcc-mingw-w64-i686
     sed -i 's/^\(CC\|AR\|RANLIB\)= /\0xi686-w64-mingw32-/g' Makefile
     make mingw
     cd ../..
@@ -27,7 +29,7 @@ elif [ $MARE_TARGET = 'win-x86' ]; then
         -L./lua-src/src -llua53
 else
     make linux
-    cd ..
+    cd ../..
     gcc -O2 -shared -fPIC -D_GNU_SOURCE -I./lua-src/src -o remotedebug.so remotedebug.c
 fi
 
