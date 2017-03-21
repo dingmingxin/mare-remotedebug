@@ -20,7 +20,7 @@ matrix:
           env: MARE_ARCH=win-x86
         - os: osx
           osx_image: xcode8.2
-          env: MARE_ARCH=macos-x64
+          env: MARE_ARCH=mac-x64
 
 before_install:
     - ./install.ubuntu.sh
