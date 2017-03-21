@@ -6,7 +6,7 @@ script:
     - cd lua-src
     - make macosx
     - cd ..
-    - gcc -O2 -bundle -undefined dynamic_lookup -I./lua/src -o remotedebug.so remotedebug.c
+    - gcc -O2 -bundle -undefined dynamic_lookup -I./lua-src/src -o remotedebug.so remotedebug.c
     - ls
     - cp lua-src/src/lua .
     - ./lua -e 'print(require("remotedebug"))'
