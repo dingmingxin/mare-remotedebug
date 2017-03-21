@@ -6,6 +6,10 @@ matrix:
           dist: trusty
           sudo: false
           env: MARE_TARGET=linux-x64
+        - os: linux
+          dist: trusty
+          sudo: false
+          env: MARE_TARGET=win-x64
         - os: osx
           osx_image: xcode8.2
           env: MARE_TARGET=macos-x64
