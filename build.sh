@@ -10,7 +10,8 @@ function build_linux() {
     cflags="$1"
 
     cd lua-src
-    make linux MYCFLAGS=$cflags
+    make linux \
+        CC="gcc -std=gnu99 $cflags"
     cd ..
 
     gcc -O2 -shared -fPIC -D_GNU_SOURCE \
