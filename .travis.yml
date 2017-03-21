@@ -23,7 +23,7 @@ matrix:
           env: MARE_ARCH=macos-x64
 
 before_install:
-    - ./travis-install.sh
+    - ./install.ubuntu.sh
           
 script:
     - ./build.sh
