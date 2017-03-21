@@ -1,12 +1,14 @@
 language: c
-os: osx
-osx_image: xcode8.2
+
+martix:
+    include:
+        - os: linux
+          dist: trusty
+          sudo: false
+          env: TARGET_ARCH=linux-x64
+        - os: osx
+          osx_image: xcode8.2
+          env: TARGET_ARCH=macos-x64
+          
 script:
-    - git clone --depth 1 https://github.com/muzuiget/mirror-lua.git lua-src
-    - cd lua-src
-    - make macosx
-    - cd ..
-    - gcc -O2 -bundle -undefined dynamic_lookup -I./lua-src/src -o remotedebug.so remotedebug.c
-    - ls
-    - cp lua-src/src/lua .
-    - ./lua -e 'print(require("remotedebug"))'
+    - build.sh
