@@ -21,6 +21,30 @@ matrix:
         - os: osx
           osx_image: xcode8.2
           env: MARE_ARCH=mac-x64
+        - os: linux
+          dist: trusty
+          sudo: required
+          env: MARE_ARCH=android-x64
+        - os: linux
+          dist: trusty
+          sudo: required
+          env: MARE_ARCH=android-x86
+        - os: linux
+          dist: trusty
+          sudo: required
+          env: MARE_ARCH=android-arm
+        - os: linux
+          dist: trusty
+          sudo: required
+          env: MARE_ARCH=android-arm64
+        - os: linux
+          dist: trusty
+          sudo: required
+          env: MARE_ARCH=android-mips
+        - os: linux
+          dist: trusty
+          sudo: required
+          env: MARE_ARCH=android-mips64
 
 before_install:
     - ./install.travis.sh
