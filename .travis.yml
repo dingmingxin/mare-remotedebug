@@ -54,3 +54,8 @@ before_install:
           
 script:
     - ./build.sh
+
+cache:
+  directories:
+    - ./android-ndk/
+    - ./android-ndk-r13b-linux-x86_64.zip
