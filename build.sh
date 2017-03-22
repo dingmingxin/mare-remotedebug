@@ -8,7 +8,7 @@ function download_android_ndk() {
         if [ ! -f $pkg ]; then
             wget $url -O $pkg
         fi
-        unzip $pkg
+        unzip -q $pkg
         mv $ndk android-ndk
     fi
 }

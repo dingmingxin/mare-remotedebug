@@ -1,5 +1,8 @@
 language: c
 
+notifications:
+    email: false
+
 matrix:
     include:
         - os: linux
